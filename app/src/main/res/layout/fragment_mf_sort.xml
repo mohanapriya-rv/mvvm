@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    tools:context="MFSchemeSortFragment">
+
+    <TextView
+        android:id="@+id/tv_scheme_sort"
+        style="@style/sortfunds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/v_sort_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Sort Funds" />
+
+    <TextView
+        android:id="@+id/tv_scheme_hightolow"
+        style="@style/High_to_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:fontFamily="@font/poppins_bold"
+        app:drawableLeftCompat="@drawable/ic_hightolowsvg"
+        app:layout_constraintBottom_toTopOf="@id/v_sort_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_scheme_sort"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="High to Low" />
+
+    <View
+        android:id="@+id/v_sort_divider"
+        style="@style/sort_divider"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_scheme_sort" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_schemesort_"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_apply_sort"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_sort_divider" />
+
+    <Button
+        android:id="@+id/btn_apply_sort"
+        style="@style/sort_applybutton"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_sortscheme_apply_button"
+        android:textAllCaps="false"
+        app:backgroundTint="@color/purple_200"
+        app:layout_constraintEnd_toStartOf="@id/btn_reset_sort"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_schemesort_" />
+
+    <Button
+        android:id="@+id/btn_reset_sort"
+        style="@style/sort_resetbutton"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_sortscheme_reset_button"
+        android:textAllCaps="false"
+        app:backgroundTint="@color/material_on_background_disabled"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_apply_sort"
+        app:layout_constraintTop_toBottomOf="@id/rv_schemesort_" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
