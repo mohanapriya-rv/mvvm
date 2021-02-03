@@ -9,13 +9,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
+        android:layout_marginBottom="20dp"
         android:textColor="@android:color/black"
         android:text="@string/risk_profile_calculation"
         android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_options"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -17,9 +17,9 @@ class PageListFragment( val position: Int) : Fragment() {
    private  lateinit var optionListAdapter: optionListAdapter
     private lateinit var RecyclerView:RecyclerView
     private lateinit var TextView:TextView
-    private val pageFragmentViewModel by viewModels<pageFragmentViewModel>()
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+    private val pageFragmentViewModel by viewModels<pageFragmentViewModel>()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         myRootView=inflater.inflate(R.layout.fragment_page, container, false)
         return myRootView
     }
@@ -37,7 +37,6 @@ class PageListFragment( val position: Int) : Fragment() {
         })
 
     }
-
     private fun updateGoal(options: List<Options>) {
        optionListAdapter.updateAdapter(options)
         TextView.text=options[position].Questions
@@ -46,9 +45,12 @@ class PageListFragment( val position: Int) : Fragment() {
     private fun createRecyclerViewAdapter() {
         RecyclerView.apply{
             layoutManager=LinearLayoutManager(context)
-            optionListAdapter = optionListAdapter(position){
-                Log.i("priya",it)
+            optionListAdapter = optionListAdapter(pageFragmentViewModel,position){ questionId: Int, answerOption:String->
+             Log.i("priya",questionId.toString()+"&&&&"+answerOption)
+                val selectedOptions=selectedOptions(questionId,answerOption)
+              pageFragmentViewModel.getSelectedOptions(answerOption)
             }
+
             adapter=optionListAdapter
 
         }

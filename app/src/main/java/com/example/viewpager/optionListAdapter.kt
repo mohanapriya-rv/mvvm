@@ -12,14 +12,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class optionListAdapter(var pagerposition: Int,private val callback: (String) -> Unit) : RecyclerView.Adapter<optionListAdapter.ViewHolder>(){
+class optionListAdapter(private val pageFragmentViewModel: pageFragmentViewModel,var pagerposition: Int, private val callback:(Int,String) -> Unit ) : RecyclerView.Adapter<optionListAdapter.ViewHolder>(){
     private lateinit var context: Context
     private var items=ArrayList<Options>()
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(answerOption: String) {
-             mfOptionText.text=answerOption
+        fun bind(answerOption: choiceOptions) {
+           mfOptionText.text=answerOption.answer
         }
-
         val dividerLine: View = itemView.findViewById(R.id.divider_line)
         var mfOptionText: TextView = itemView.findViewById(R.id.tv_options)
         val mfoptionsRow: ConstraintLayout = itemView.findViewById(R.id.mf_options_row)
@@ -32,52 +31,46 @@ class optionListAdapter(var pagerposition: Int,private val callback: (String) ->
                         parent, false))
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val  answerOption = items[pagerposition].choiceOptions[position].answer
 
+        val  answerOption = items[pagerposition].choiceOptions[holder.adapterPosition]
         holder.bind(answerOption)
         holder.mfoptionsRow.setOnClickListener{
-            if(!items[pagerposition].isChecked) {
-                items[pagerposition].isChecked = true
-                holder.mfOptionsButton.isChecked = true
-            }
-            else
-            {
-                items[pagerposition].isChecked = false
-                holder.mfOptionsButton.isChecked = false
-            }
-            callback(answerOption)
+            callback(pagerposition,items[pagerposition].choiceOptions[position].answer)
+            notifyDataSetChanged()
         }
 
-        if (holder.position == items[pagerposition].choiceOptions.size - 1) {
-            holder.dividerLine.visibility = View.INVISIBLE
-        } else {
-            holder.dividerLine.visibility = View.VISIBLE
-    }
-//        if ("Basic"== answerOption) {
-//            holder.mfOptionsButton.isChecked = true
-//            holder.mfOptionText.setTextColor(ContextCompat.getColor(context, R.color.light_black))
-//            holder.mfOptionText.typeface = ResourcesCompat.getFont(context, R.font.open_sans_semibold)
-//        } else {
-//            holder.mfOptionsButton.isChecked = false
-//            holder.mfOptionText.setTextColor(ContextCompat.getColor(context, R.color.bermuda_grey))
-//            holder.mfOptionText.typeface = ResourcesCompat.getFont(context, R.font.open_sans)
-//        }
-    }
+if (holder.adapterPosition == items[pagerposition].choiceOptions.size - 1) {
+    holder.dividerLine.visibility = View.INVISIBLE
+} else {
+    holder.dividerLine.visibility = View.VISIBLE
+}
 
+
+        if (pageFragmentViewModel.selectedOrderBy==answerOption.answer) {
+            holder.mfOptionsButton.isChecked = true
+            holder.mfOptionText.setTextColor(ContextCompat.getColor(context, R.color.teal_200))
+            holder.mfOptionText.typeface = ResourcesCompat.getFont(context, R.font.open_sans_semibold)
+        } else {
+            holder.mfOptionsButton.isChecked = false
+            holder.mfOptionText.setTextColor(ContextCompat.getColor(context, R.color.black))
+            holder.mfOptionText.typeface = ResourcesCompat.getFont(context, R.font.open_sans)
+        }
+
+    }
     override fun getItemCount(): Int {
         return items[pagerposition].choiceOptions.size
     }
 
-override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
     super.onAttachedToRecyclerView(recyclerView)
     context = recyclerView.context
-}
+    }
 
     fun updateAdapter(goal: List<Options>) {
         this.items= goal as ArrayList<Options>
         Log.i("vvvv",items.toString())
-        notifyDataSetChanged()
     }
 
 
 }
+

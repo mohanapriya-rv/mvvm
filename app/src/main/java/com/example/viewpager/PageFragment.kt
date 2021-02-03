@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -24,7 +25,6 @@ class PageFragment : BottomSheetDialogFragment() {
     private lateinit var pagerAdapter: PageAdapter
     private lateinit var Button:Button
     private lateinit var Button1:Button
-    private lateinit var pageFragmentViewModel: pageFragmentViewModel
     private lateinit var linearLayout: LinearLayout
     private lateinit var bottomSheetDialog: BottomSheetDialog
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -43,7 +43,6 @@ class PageFragment : BottomSheetDialogFragment() {
         Button.setOnClickListener {
             viewPager.currentItem = viewPager.currentItem + 1
         }
-
         Button1.setOnClickListener {
             if(viewPager.currentItem==0)
             {
