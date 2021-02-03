@@ -1,6 +1,7 @@
 package com.example.viewpager
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class PageListFragment( val position: Int) : Fragment() {
     private lateinit var myRootView: View
-   private var optionListAdapter=optionListAdapter(position)
+   private  lateinit var optionListAdapter: optionListAdapter
     private lateinit var RecyclerView:RecyclerView
     private lateinit var TextView:TextView
     private val pageFragmentViewModel by viewModels<pageFragmentViewModel>()
@@ -45,7 +46,9 @@ class PageListFragment( val position: Int) : Fragment() {
     private fun createRecyclerViewAdapter() {
         RecyclerView.apply{
             layoutManager=LinearLayoutManager(context)
-            optionListAdapter = optionListAdapter(position)
+            optionListAdapter = optionListAdapter(position){
+                Log.i("priya",it)
+            }
             adapter=optionListAdapter
 
         }

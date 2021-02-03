@@ -12,10 +12,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class optionListAdapter(var pagerposition: Int) : RecyclerView.Adapter<optionListAdapter.ViewHolder>(){
+class optionListAdapter(var pagerposition: Int,private val callback: (String) -> Unit) : RecyclerView.Adapter<optionListAdapter.ViewHolder>(){
     private lateinit var context: Context
     private var items=ArrayList<Options>()
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(answerOption: String) {
+             mfOptionText.text=answerOption
+        }
+
         val dividerLine: View = itemView.findViewById(R.id.divider_line)
         var mfOptionText: TextView = itemView.findViewById(R.id.tv_options)
         val mfoptionsRow: ConstraintLayout = itemView.findViewById(R.id.mf_options_row)
@@ -28,22 +32,36 @@ class optionListAdapter(var pagerposition: Int) : RecyclerView.Adapter<optionLis
                         parent, false))
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mfOptionText.text= items[pagerposition].choiceOptions[position].answer
+        val  answerOption = items[pagerposition].choiceOptions[position].answer
 
-//       if(holder.mfOptionsButton.isChecked)
-//       {
-//           holder.mfOptionText.setTextColor(ContextCompat.getColor(context, R.color.teal_200))
-//           holder.mfOptionText.typeface = ResourcesCompat.getFont(context, R.font.open_sans_semibold)
-//       }
-//        else {
-//            holder.mfOptionText.setTextColor(ContextCompat.getColor(context, R.color.black))
-//            holder.mfOptionText.typeface = ResourcesCompat.getFont(context, R.font.open_sans)
-//        }
+        holder.bind(answerOption)
+        holder.mfoptionsRow.setOnClickListener{
+            if(!items[pagerposition].isChecked) {
+                items[pagerposition].isChecked = true
+                holder.mfOptionsButton.isChecked = true
+            }
+            else
+            {
+                items[pagerposition].isChecked = false
+                holder.mfOptionsButton.isChecked = false
+            }
+            callback(answerOption)
+        }
+
         if (holder.position == items[pagerposition].choiceOptions.size - 1) {
             holder.dividerLine.visibility = View.INVISIBLE
         } else {
             holder.dividerLine.visibility = View.VISIBLE
-        }
+    }
+//        if ("Basic"== answerOption) {
+//            holder.mfOptionsButton.isChecked = true
+//            holder.mfOptionText.setTextColor(ContextCompat.getColor(context, R.color.light_black))
+//            holder.mfOptionText.typeface = ResourcesCompat.getFont(context, R.font.open_sans_semibold)
+//        } else {
+//            holder.mfOptionsButton.isChecked = false
+//            holder.mfOptionText.setTextColor(ContextCompat.getColor(context, R.color.bermuda_grey))
+//            holder.mfOptionText.typeface = ResourcesCompat.getFont(context, R.font.open_sans)
+//        }
     }
 
     override fun getItemCount(): Int {
