@@ -100,7 +100,7 @@ fun createData1(){
     {
         val childOptions1:ArrayList<String> = ArrayList()
         childOptions1.add(parentDummyData[i].choiceOptions[0].answer)
-        parentDummyData1?.add(selectedOptions(i,1,childOptions1))
+        parentDummyData1?.add(selectedOptions(i,i,childOptions1))
     }
     Log.i("aatat",parentDummyData1.toString())
 

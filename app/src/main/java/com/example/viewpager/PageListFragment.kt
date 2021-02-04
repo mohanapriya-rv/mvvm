@@ -29,10 +29,10 @@ class PageListFragment( val position: Int) : Fragment() {
         createRecyclerViewAdapter()
         observeLiveData()
         pageFragmentViewModel.createData()
-        if(pageFragmentViewModel.parentDummyData1==null)
-        {
+//        if(pageFragmentViewModel.parentDummyData1==null)
+//        {
             pageFragmentViewModel.createData1()
-        }
+      //  }
     }
 
     private fun observeLiveData() {
