@@ -4,19 +4,23 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-const val DEFAULT_SORT_ORDER_BY: String = "Not "
-val parentDummyData = ArrayList<Options>()
+
+
 class pageFragmentViewModel:ViewModel() {
-    private val _options = MutableLiveData<List<Options>>()
+    val parentDummyData = ArrayList<Options>()
+    var parentDummyData1 :ArrayList<selectedOptions>?=null
+    var childOptions:ArrayList<choiceOptions> = ArrayList()
+     var _selectedArrayList=ArrayList<selectedOptions>()
+     private val _options = MutableLiveData<List<Options>>()
     val options: LiveData<List<Options>>
         get() = _options
-
-
- var selectedOrderBy: String=""
-
+    private val _optionsnew = MutableLiveData<List<selectedOptions>>()
+    val optionsnew: LiveData<List<selectedOptions>>
+        get() = _optionsnew
+    var selectedOrderBy:String=""
     fun createData() {
 
-        var childOptions:ArrayList<choiceOptions> = ArrayList()
+
         childOptions.add(choiceOptions("Under 30"))
         childOptions.add(choiceOptions("31 - 40"))
         childOptions.add(choiceOptions("41 - 50"))
@@ -35,19 +39,19 @@ class pageFragmentViewModel:ViewModel() {
         parentDummyData.add(Options("How old are you?",childOptions))
 
         childOptions = ArrayList()
-        childOptions.add(choiceOptions("No Income / retired"))
-        childOptions.add(choiceOptions("Single Income / atleast one dependent"))
-        childOptions.add(choiceOptions("Single Income / no dependent"))
-        childOptions.add(choiceOptions("Dual Income / atleast one dependent"))
-       childOptions.add(choiceOptions("Dual Income / no dependent"))
+        childOptions.add(choiceOptions("No Income/retired"))
+        childOptions.add(choiceOptions("Single Income/atleast one dependent"))
+        childOptions.add(choiceOptions("Single Income/no dependent"))
+        childOptions.add(choiceOptions("Dual Income/atleast one dependent"))
+        childOptions.add(choiceOptions("Dual Income/no dependent"))
         parentDummyData.add(Options("Your household can be best described as",childOptions))
 
         childOptions = ArrayList()
         childOptions.add(choiceOptions("Not familiar"))
         childOptions.add(choiceOptions("Very limited knowledge"))
         childOptions.add(choiceOptions("Basic knowledge and minimal experience"))
-       childOptions.add(choiceOptions("Good knowledge and some investment experience"))
-       childOptions.add(choiceOptions("Basic "))
+        childOptions.add(choiceOptions("Good knowledge and some investment experience"))
+        childOptions.add(choiceOptions("Basic "))
         childOptions.add(choiceOptions("Advanced knowledge and extensive experience"))
         parentDummyData.add(Options("How do you rate your knowledge of investments and securities markets in general?",childOptions))
 
@@ -79,32 +83,38 @@ class pageFragmentViewModel:ViewModel() {
         childOptions.add(choiceOptions("Greater than FD + 5% annual returns annual returns with a chance of 60% temporary short term loss at some point"))
        parentDummyData.add(Options("Which long term return - short term risk combination would you prefer?",childOptions))
 
-
-
-       childOptions = ArrayList()
+        childOptions = ArrayList()
        childOptions.add(choiceOptions("< 1 Year"))
        childOptions.add(choiceOptions("1 - 3 years"))
        childOptions.add(choiceOptions("5 - 3 years"))
        childOptions.add(choiceOptions("5 to 10 years "))
        childOptions.add(choiceOptions("10+ years"))
        parentDummyData.add(Options("How long do you plan to hold your investments? (this is your investment horizon)",childOptions))
-
-       _options.value=parentDummyData
-
-    }
-
-    private fun getSelectedFilters(): MutableList<selectedOptions> {
-        return mutableListOf()
-        }
- fun getSelectedOptions( string: String) :String {
-
-    selectedOrderBy=string
-     Log.i("priya",selectedOrderBy)
-     return selectedOrderBy
-
+        _options.value=parentDummyData
     }
 
 
+fun createData1(){
+    parentDummyData1= ArrayList()
+    for(i in 0 until parentDummyData.size)
+    {
+        val childOptions1:ArrayList<String> = ArrayList()
+        childOptions1.add(parentDummyData[i].choiceOptions[0].answer)
+        parentDummyData1?.add(selectedOptions(i,1,childOptions1))
+    }
+    Log.i("aatat",parentDummyData1.toString())
+
+    _optionsnew.value=parentDummyData1
+}
+    fun getSelectedOptions1(sopt: selectedOptions) {
+        val childoptions1:ArrayList<String> = ArrayList()
+
+       // childoptions1.remove(sopt.answers[0])
+     //   childoptions1.add(sopt.answers[0])
+        parentDummyData1?.set(sopt.tabPosition,selectedOptions(sopt.tabPosition,sopt.questionId,sopt.answers))
+        Log.i("aaa",parentDummyData1.toString())
+        Log.i("avava",parentDummyData1.toString())
+    }
 }
 
 

@@ -44,9 +44,7 @@ if (holder.adapterPosition == items[pagerposition].choiceOptions.size - 1) {
 } else {
     holder.dividerLine.visibility = View.VISIBLE
 }
-
-
-        if (pageFragmentViewModel.selectedOrderBy==answerOption.answer) {
+        if (pageFragmentViewModel.parentDummyData1?.get(pagerposition)?.answers?.get(0)==answerOption.answer) {
             holder.mfOptionsButton.isChecked = true
             holder.mfOptionText.setTextColor(ContextCompat.getColor(context, R.color.teal_200))
             holder.mfOptionText.typeface = ResourcesCompat.getFont(context, R.font.open_sans_semibold)
@@ -68,7 +66,6 @@ if (holder.adapterPosition == items[pagerposition].choiceOptions.size - 1) {
 
     fun updateAdapter(goal: List<Options>) {
         this.items= goal as ArrayList<Options>
-        Log.i("vvvv",items.toString())
     }
 
 

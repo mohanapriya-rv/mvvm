@@ -29,6 +29,10 @@ class PageListFragment( val position: Int) : Fragment() {
         createRecyclerViewAdapter()
         observeLiveData()
         pageFragmentViewModel.createData()
+        if(pageFragmentViewModel.parentDummyData1==null)
+        {
+            pageFragmentViewModel.createData1()
+        }
     }
 
     private fun observeLiveData() {
@@ -47,8 +51,10 @@ class PageListFragment( val position: Int) : Fragment() {
             layoutManager=LinearLayoutManager(context)
             optionListAdapter = optionListAdapter(pageFragmentViewModel,position){ questionId: Int, answerOption:String->
              Log.i("priya",questionId.toString()+"&&&&"+answerOption)
-                val selectedOptions=selectedOptions(questionId,answerOption)
-              pageFragmentViewModel.getSelectedOptions(answerOption)
+
+                 val selectedOptions=selectedOptions(tabPosition =questionId,questionId,answers= listOf(answerOption))
+                pageFragmentViewModel.getSelectedOptions1(selectedOptions)
+               // pageFragmentViewModel.getSelectedOptions(answerOption)
             }
 
             adapter=optionListAdapter
@@ -56,7 +62,7 @@ class PageListFragment( val position: Int) : Fragment() {
         }
     }
     private fun init() {
-        TextView=myRootView.findViewById<TextView>(R.id.question)
+        TextView=myRootView.findViewById(R.id.question)
         RecyclerView=myRootView.findViewById(R.id.rv_options)
     }
 
