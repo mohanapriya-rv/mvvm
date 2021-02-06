@@ -1,7 +1,7 @@
 package com.example.viewpager
 
 
-data class selectedOptions (
+data class SelectedOptions (
         var tabPosition:Int=-1,
         var questionId:Int,
         var answers:List<String>)

@@ -6,21 +6,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 
-class pageFragmentViewModel:ViewModel() {
+class PageFragmentViewModel:ViewModel() {
+
     val parentDummyData = ArrayList<Options>()
-    var parentDummyData1 :ArrayList<selectedOptions>?=null
+
+    var parentDummyData1 :ArrayList<SelectedOptions>?=null
+
     var childOptions:ArrayList<choiceOptions> = ArrayList()
-     var _selectedArrayList=ArrayList<selectedOptions>()
+
+     var _selectedArrayList=ArrayList<SelectedOptions>()
+
      private val _options = MutableLiveData<List<Options>>()
+
     val options: LiveData<List<Options>>
         get() = _options
-    private val _optionsnew = MutableLiveData<List<selectedOptions>>()
-    val optionsnew: LiveData<List<selectedOptions>>
+
+    private val _optionsnew = MutableLiveData<List<SelectedOptions>>()
+
+    val optionsnew: LiveData<List<SelectedOptions>>
         get() = _optionsnew
-    var selectedOrderBy:String=""
+    init{
+
+        Log.i("cc","viewmodels created")
+        createData()
+        createData1()
+    }
     fun createData() {
-
-
         childOptions.add(choiceOptions("Under 30"))
         childOptions.add(choiceOptions("31 - 40"))
         childOptions.add(choiceOptions("41 - 50"))
@@ -95,25 +106,26 @@ class pageFragmentViewModel:ViewModel() {
 
 
 fun createData1(){
+
     parentDummyData1= ArrayList()
+
     for(i in 0 until parentDummyData.size)
     {
         val childOptions1:ArrayList<String> = ArrayList()
         childOptions1.add(parentDummyData[i].choiceOptions[0].answer)
-        parentDummyData1?.add(selectedOptions(i,i,childOptions1))
+        parentDummyData1?.add(SelectedOptions(i,i,childOptions1))
     }
+
     Log.i("aatat",parentDummyData1.toString())
 
     _optionsnew.value=parentDummyData1
 }
-    fun getSelectedOptions1(sopt: selectedOptions) {
-        val childoptions1:ArrayList<String> = ArrayList()
 
-       // childoptions1.remove(sopt.answers[0])
-     //   childoptions1.add(sopt.answers[0])
-        parentDummyData1?.set(sopt.tabPosition,selectedOptions(sopt.tabPosition,sopt.questionId,sopt.answers))
+    fun getSelectedOptions1(selectedoptionsdata: SelectedOptions) {
+
+        parentDummyData1?.set(selectedoptionsdata.tabPosition,SelectedOptions(selectedoptionsdata.tabPosition,selectedoptionsdata.questionId,selectedoptionsdata.answers))
         Log.i("aaa",parentDummyData1.toString())
-        Log.i("avava",parentDummyData1.toString())
+        Log.i("testdata",parentDummyData1.toString())
     }
 }
 
